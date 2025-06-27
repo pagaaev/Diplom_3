@@ -1,10 +1,9 @@
 package org.example.Pages;
 
+import io.qameta.allure.Step;
 import org.example.API.BackToMainDetails;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
-import static jdk.javadoc.doclet.DocletEnvironment.ModuleMode.API;
 
 public class MainPage {
 
@@ -37,54 +36,67 @@ public class MainPage {
         this.driver = driver;
     }
 
+    @Step("Нажать кнопку Логотип")
     public void clickLogoButton() {
         driver.findElement(btnLogo).click();
     }
 
+    @Step("Нажать кнопку Конструктор")
     public void clickConstructorButton() {
         driver.findElement(btnConstructor).click();
     }
 
+    @Step("Нажать кнопку Войти в аккаунт")
     public void clickLoginButton() {
         driver.findElement(btnLogin).click();
     }
 
+    @Step("Нажать кнопку Булки")
     public void clickBunsButton() {
         driver.findElement(btnBuns).click();
     }
 
+    @Step("Нажать кнопку Соусы")
     public void clickSaucesButton() {
         driver.findElement(btnSauces).click();
     }
 
+    @Step("Нажать кнопку Начинки")
     public void clickFillingsButton() {
         driver.findElement(btnFillings).click();
     }
 
+    @Step("Получить текст заголовка 'Соберите бургер'")
     public String getCreateBurgerTextFromHeader() {
         return driver.findElement(headerCreateBurger).getText();
     }
 
+    @Step("Проверить, что кнопка Булки активна")
     public boolean btnBunsIsEnabled() {
         return driver.findElement(btnBunsIsCurrent).isEnabled();
     }
+
+    @Step("Проверить, что кнопка Соусы активна")
     public boolean btnSaucesIsEnabled() {
         return driver.findElement(btnSaucesIsCurrent).isEnabled();
     }
 
+    @Step("Проверить, что кнопка Начинки активна")
     public boolean btnFillingsIsEnabled() {
         return driver.findElement(btnFillingsIsCurrent).isEnabled();
     }
 
+    @Step("Нажать кнопку Личный кабинет")
     public void clickProfileButton() {
         driver.findElement(btnProfile).click();
     }
 
+    @Step("Вернуться на главную страницу через кнопку: {button}")
     public void backToMainPage(String button) {
         BackToMainDetails backToMainDetails = new BackToMainDetails(driver);
         if(button.equals(BackToMainDetails.LOGO_BACK_TO_MAIN_PAGE)){
             clickLogoButton();
-        }else{
+        } else {
             clickConstructorButton();
         }
     }
