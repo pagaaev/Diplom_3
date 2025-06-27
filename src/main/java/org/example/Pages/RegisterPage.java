@@ -6,24 +6,23 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 public class RegisterPage {
+    private final WebDriver driver;
 
-    WebDriver driver;
-
-    // Поле "Имя"
+    // Локаторы элементов
     private final By inputName = By.xpath(".//label[text()='Имя']/../input");
-    // Поле "Email"
     private final By inputEmail = By.xpath(".//label[text()='Email']/../input");
-    // Поле "Пароль"
     private final By inputPassword = By.xpath(".//label[text()='Пароль']/../input");
-    // Кнопка "Зарегистрироваться"
     private final By btnRegister = By.xpath(".//button[text()='Зарегистрироваться']");
-    // Ошибка "Некорректный пароль"
     private final By textInvalidPassword = By.xpath(".//p[text()='Некорректный пароль']");
-    // Кнопка "Войти" под формой регистрации
     private final By btnLoginUnderReg = By.className("Auth_link__1fOlj");
 
     public RegisterPage(WebDriver driver) {
         this.driver = driver;
+    }
+
+    // Новый метод для тестов
+    public By getTextInvalidPasswordLocator() {
+        return textInvalidPassword;
     }
 
     @Step("Ввести имя: {name}")

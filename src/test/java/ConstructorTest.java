@@ -1,6 +1,7 @@
+import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
-import org.example.API.APIconfig;
-import org.example.API.WebDriverConfig;
+import org.example.api.APIconfig;
+import org.example.api.WebDriverConfig;
 import org.example.Pages.MainPage;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,6 +15,7 @@ public class ConstructorTest {
     private WebDriver driver;
 
     @Before
+    @Step("Открываем браузер и переходим на главную страницу")
     public void setup() {
         driver = WebDriverConfig.setDriver();
         driver.manage().timeouts().implicitlyWait(WebDriverConfig.WAIT_SEC_TIMEOUT, TimeUnit.SECONDS);
@@ -21,31 +23,53 @@ public class ConstructorTest {
     }
 
     @Test
-    @DisplayName("Go to Buns tab")
+    @DisplayName("Переключение на вкладку 'Булки'")
     public void SwitchToBunsTabGetSuccess() {
         MainPage mainPage = new MainPage(driver);
-        mainPage.clickFillingsButton();
-        mainPage.clickBunsButton();
+
+        clickFillings(mainPage);
+        clickBuns(mainPage);
+
         Assert.assertTrue(mainPage.btnBunsIsEnabled());
     }
 
-    @Test
-    @DisplayName("Go to Sauces tab")
-    public void SwitchToSaucesTabGetSuccess() {
-        MainPage mainPage = new MainPage(driver);
-        mainPage.clickSaucesButton();
-        Assert.assertTrue(mainPage.btnSaucesIsEnabled());
+    @Step("Кликаем на вкладку 'Начинки'")
+    private void clickFillings(MainPage mainPage) {
+        mainPage.clickFillingsButton();
+    }
+
+    @Step("Кликаем на вкладку 'Булки'")
+    private void clickBuns(MainPage mainPage) {
+        mainPage.clickBunsButton();
     }
 
     @Test
-    @DisplayName("Go to Fillings tab")
+    @DisplayName("Переключение на вкладку 'Соусы'")
+    public void SwitchToSaucesTabGetSuccess() {
+        MainPage mainPage = new MainPage(driver);
+
+        clickSauces(mainPage);
+
+        Assert.assertTrue(mainPage.btnSaucesIsEnabled());
+    }
+
+    @Step("Кликаем на вкладку 'Соусы'")
+    private void clickSauces(MainPage mainPage) {
+        mainPage.clickSaucesButton();
+    }
+
+    @Test
+    @DisplayName("Переключение на вкладку 'Начинки'")
     public void SwitchToFillingsTabGetSuccess() {
         MainPage mainPage = new MainPage(driver);
-        mainPage.clickFillingsButton();
+
+        clickFillings(mainPage);
+
         Assert.assertTrue(mainPage.btnFillingsIsEnabled());
     }
 
     @After
+    @Step("Закрываем браузер")
     public void teardown() {
         driver.quit();
     }

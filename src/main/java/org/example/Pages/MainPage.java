@@ -1,7 +1,7 @@
 package org.example.Pages;
 
 import io.qameta.allure.Step;
-import org.example.API.BackToMainDetails;
+import org.example.api.BackToMainDetails;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 

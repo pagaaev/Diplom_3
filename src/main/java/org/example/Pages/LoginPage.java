@@ -1,31 +1,28 @@
 package org.example.Pages;
 
-import org.example.API.User;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
-public class LoginPage import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.example.User;
+import org.example.api.User;
 
 public class LoginPage {
-    WebDriver driver;
-    //Заголовок "Вход"
+    private final WebDriver driver;
+
+    // Локаторы
     private final By headerLogin = By.xpath(".//h2[text()='Вход']");
-    //Поле "Email"
     private final By inputEmail = By.xpath(".//label[text()='Email']/../input");
-    //Поле "Пароль"
     private final By inputPassword = By.xpath(".//label[text()='Пароль']/../input");
-    //Кнопка "Войти"
     private final By btnLogin = By.xpath(".//button[text()='Войти']");
-    //Кнопка "Восстановить пароль"
     private final By textResetPassword = By.xpath(".//a[text()='Восстановить пароль']");
-    //Кнопка "Личный кабинет"
     private final By btnProfile = By.xpath(".//p[text()='Личный Кабинет']");
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
+    }
+
+    // Новый метод для получения локатора заголовка
+    public By getHeaderLoginLocator() {
+        return headerLogin;
     }
 
     @Step("Получить текст заголовка 'Вход'")
@@ -58,6 +55,5 @@ public class LoginPage {
         setEmail(user.getEmail());
         setPassword(user.getPassword());
         clickLoginButton();
-        clickProfileButton();
     }
 }

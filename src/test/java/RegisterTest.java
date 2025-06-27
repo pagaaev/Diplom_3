@@ -1,5 +1,6 @@
+import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
-import org.example.API.*;
+import org.example.api.*;
 import org.example.Pages.RegisterPage;
 import org.hamcrest.MatcherAssert;
 import org.junit.After;
@@ -9,7 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
@@ -22,7 +23,7 @@ public class RegisterTest {
         user = Generator.generateUser();
 
         driver = WebDriverConfig.setDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(WebDriverConfig.WAIT_SEC_TIMEOUT));
+        driver.manage().timeouts().implicitlyWait(WebDriverConfig.WAIT_SEC_TIMEOUT, TimeUnit.SECONDS);
         driver.navigate().to(APIconfig.REGISTER_PAGE_URL);
     }
 
@@ -31,20 +32,45 @@ public class RegisterTest {
     public void registerNewUserWithShortPasswordGetError() {
         RegisterPage registerPage = new RegisterPage(driver);
 
-        registerPage.setName(user.getName());
-        registerPage.setEmail(user.getEmail());
-        registerPage.setPassword(Generator.generateWrongUserPassword());
-        registerPage.clickRegisterButton();
+        setName(registerPage, user.getName());
+        setEmail(registerPage, user.getEmail());
+        setPassword(registerPage, Generator.generateWrongUserPassword());
+        clickRegister(registerPage);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(registerPage.textInvalidPassword));
+        WebDriverWait wait = new WebDriverWait(driver, 10); // Исправлено: используем секунды вместо Duration
+        wait.until(ExpectedConditions.visibilityOfElementLocated(registerPage.getTextInvalidPasswordLocator()));
 
         MatcherAssert.assertThat(registerPage.getInvalidPasswordText(), equalTo("Некорректный пароль"));
     }
 
     @After
     public void teardown() {
-        UserOperations.deleteUser(UserOperations.getAccessToken(user));
-        driver.quit();
+        String token = UserOperations.getAccessToken(user);
+        if (token != null) {
+            UserOperations.deleteUser(token);
+        }
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    @Step("Ввод имени: {name}")
+    private void setName(RegisterPage registerPage, String name) {
+        registerPage.setName(name);
+    }
+
+    @Step("Ввод email: {email}")
+    private void setEmail(RegisterPage registerPage, String email) {
+        registerPage.setEmail(email);
+    }
+
+    @Step("Ввод пароля: {password}")
+    private void setPassword(RegisterPage registerPage, String password) {
+        registerPage.setPassword(password);
+    }
+
+    @Step("Нажатие кнопки регистрации")
+    private void clickRegister(RegisterPage registerPage) {
+        registerPage.clickRegisterButton();
     }
 }

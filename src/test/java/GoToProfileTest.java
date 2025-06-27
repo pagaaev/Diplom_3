@@ -1,24 +1,7 @@
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
-import org.example.API.*;
+import org.example.api.*;
 import org.example.Pages.LoginPage;
-import org.example.Pages.MainPage;
-import org.example.Pages.ProfilePage;
-import org.hamcrest.MatcherAssert;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-
-import java.util.concurrent.TimeUnit;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-
-public class GoToProfileTest import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
-import org.example.API.*;
-        import org.example.Pages.LoginPage;
 import org.example.Pages.MainPage;
 import org.example.Pages.ProfilePage;
 import org.hamcrest.MatcherAssert;
@@ -60,7 +43,10 @@ public class GoToProfileTest {
         mainPage.clickProfileButton();
         loginPage.loginUser(user);
 
-        Assert.assertTrue(profilePage.btnProfileTabIsEnabled());
+        // Добавляем переход в "Личный Кабинет" и ожидание вкладки "Профиль"
+        profilePage.openPersonalCabinetAndWaitForProfileTab();
+
+        Assert.assertTrue("Вкладка 'Профиль' должна быть доступна после входа", profilePage.btnProfileTabIsEnabled());
     }
 
     @Test
@@ -79,6 +65,8 @@ public class GoToProfileTest {
         if (accessToken != null && !accessToken.isEmpty()) {
             UserOperations.deleteUser(accessToken);
         }
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }
