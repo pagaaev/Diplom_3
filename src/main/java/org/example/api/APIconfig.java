@@ -1,4 +1,4 @@
-package org.example.API;
+package org.example.api;
 
 public class APIconfig {
     public static final String DOMAIN = "https://stellarburgers.nomoreparties.site";

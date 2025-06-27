@@ -1,4 +1,4 @@
-package org.example.API;
+package org.example.api;
 
 import org.openqa.selenium.WebDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;

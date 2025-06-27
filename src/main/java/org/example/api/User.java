@@ -1,4 +1,4 @@
-package org.example.API;
+package org.example.api;
 
 public class User {
     private String name;
