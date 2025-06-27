@@ -15,9 +15,28 @@ import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
+public class GoToProfileTest import io.qameta.allure.junit4.DisplayName;
+import io.restassured.RestAssured;
+import org.example.API.*;
+        import org.example.Pages.LoginPage;
+import org.example.Pages.MainPage;
+import org.example.Pages.ProfilePage;
+import org.hamcrest.MatcherAssert;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+
 public class GoToProfileTest {
 
     private WebDriver driver;
+    private User user;
+    private String accessToken;
 
     @Before
     public void setup() {
@@ -30,17 +49,18 @@ public class GoToProfileTest {
     @Test
     @DisplayName("Go to the profile as an authorized user")
     public void goToProfileAuthUserGetProfile() {
-        User user = Generator.generateUser();
+        user = Generator.generateUser();
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = new LoginPage(driver);
         ProfilePage profilePage = new ProfilePage(driver);
 
         UserOperations.createUser(user);
+        accessToken = UserOperations.getAccessToken(user);
+
         mainPage.clickProfileButton();
         loginPage.loginUser(user);
 
         Assert.assertTrue(profilePage.btnProfileTabIsEnabled());
-        UserOperations.deleteUser(UserOperations.getAccessToken(user));
     }
 
     @Test
@@ -56,6 +76,9 @@ public class GoToProfileTest {
 
     @After
     public void teardown() {
+        if (accessToken != null && !accessToken.isEmpty()) {
+            UserOperations.deleteUser(accessToken);
+        }
         driver.quit();
     }
 }
