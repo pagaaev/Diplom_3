@@ -1,5 +1,4 @@
-package org.example.api;
-
+package org.example.API;
 
 public class API {
 

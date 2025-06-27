@@ -1,4 +1,4 @@
-package org.example.api;
+package org.example.API;
 
 import org.openqa.selenium.WebDriver;
 

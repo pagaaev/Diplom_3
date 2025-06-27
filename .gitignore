@@ -1,79 +1,38 @@
-.allure/
-
-
-### Бинарные и сгенерированные файлы ###
-*.class
-*.jar
-*.war
-*.ear
-*.nar
-*.zip
-*.tar
-*.so
-*.dll
-*.exe
-*.o
-*.a
-*.lib
-*.dylib
-
-### Системные файлы ###
-.DS_Store
-Thumbs.db
-*.swp
-*.swo
-*~
-*.bak
-*.tmp
-*.orig
-
-### Maven ###
 target/
 !.mvn/wrapper/maven-wrapper.jar
-**/target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### Gradle ###
-build/
-.gradle/
-!gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### IDE ###
-# IntelliJ
-.idea/
-*.iml
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
 *.iws
+*.iml
 *.ipr
-out/
 
-# Eclipse
-.settings/
+### Eclipse ###
 .apt_generated
 .classpath
 .factorypath
 .project
+.settings
 .springBeans
 .sts4-cache
-bin/
 
-# NetBeans
-nbproject/
-nbactions.xml
-nb-configuration.xml
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-# VS Code
+### VS Code ###
 .vscode/
-*.code-workspace
 
-### Логи и отчеты ###
-*.log
-logs/
-*.patch
-*.rej
-
-### Документация ###
-**/javadoc/
-**/apidocs/
+### Mac OS ###
+.DS_Store
